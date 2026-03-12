@@ -1,15 +1,7 @@
-/* Selector universal: aplica a todos los elementos */
 * {
     box-sizing: border-box;
 }
 
-/* Luego siguen tus estilos del body */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* ... el resto de tu código ... */
-}
-
-/* Basic reset to clear default margins */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
@@ -20,12 +12,11 @@ body {
 }
 
 main {
-    max-width: 800px; /* Evita que el texto se estire demasiado en pantallas anchas */
-    margin: 0 auto;  /* Centra el contenido principal */
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
 }
 
-/* Centrar todo el contenido del header */
 header {
     background: #222;
     color: #fff;
@@ -33,16 +24,15 @@ header {
     text-align: center;
 }
 
-/* Quitar los puntos de la lista y alinear en horizontal */
 nav ul {
     list-style: none;
     padding: 0;
+    margin: 0;
     display: flex;
     justify-content: center;
-    gap: 20px; /* Espacio entre links */
+    gap: 20px;
 }
 
-/* Estilo para los enlaces del menú */
 nav a {
     color: #4da3ff;
     text-decoration: none;
@@ -53,18 +43,6 @@ nav a {
 nav a:hover {
     color: #fff;
     text-decoration: underline;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
 }
 
 section {
