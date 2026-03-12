@@ -1,38 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Website</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<header>
+    <h1>ECL Preparation Hub</h1>
+    <nav>
+        <ul>
+            <li><a href="#info">Información</a></li>
+            <li><a href="#grammar">Gramática</a></li>
+            <li><a href="#vocab">Vocabulario</a></li>
+            <li><a href="#functional">Functional</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#mocks">Mock Tests</a></li>
+        </ul>
+    </nav>
+</header>
 
-    <header>
-        <h1>Welcome to My Website</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-            </ul>
-        </nav>
-    </header>
+<main>
+    <section id="info">
+        <h2>Dinámica del Examen</h2>
+        <p>El ECL consta de 100 preguntas de opción múltiple. Evalúa la comprensión auditiva y escrita en contextos generales y militares.</p>
+        <ul>
+            <li><strong>Parte I (Listening):</strong> 66 preguntas (aproximadamente 30-35 min).</li>
+            <li><strong>Parte II (Reading):</strong> 34 preguntas (30 min) sobre gramática y vocabulario.</li>
+        </ul>
+    </section>
 
-    <main>
-        <section id="about">
-            <h2>Sobre Mí</h2>
-            <p>¡Hola! Soy un desarrollador aprendiendo a usar GitHub y VS Code.</p>
+    <div class="training-grid">
+        <section id="grammar">
+            <h3>Gramática ECL</h3>
+            <p>Repaso de estructuras: condicionales, voz pasiva y reportes.</p>
+            <button class="btn-study">Estudiar</button>
         </section>
 
-        <section id="projects">
-            <h2>Mis Proyectos</h2>
-            <ul>
-                <li>Proyecto 1: Mi primera web</li>
-                <li>Proyecto 2: En construcción...</li>
-            </ul>
+        <section id="vocab">
+            <h3>Vocabulary (Military Oriented)</h3>
+            <p>Términos técnicos, rangos y vocabulario de logística y servicio.</p>
+            <button class="btn-study">Repasar</button>
         </section>
-    </main>
 
-    <script src="script.js"></script>
-</body>
-</html>
+        <section id="functional">
+            <h3>Functional Language</h3>
+            <p>Cómo dar órdenes, pedir permisos y lenguaje de oficina.</p>
+            <button class="btn-study">Ver ejemplos</button>
+        </section>
+    </div>
+
+    <div class="training-grid">
+        <section id="listening">
+            <h3>Listening Skills</h3>
+            <p>Entrenamiento auditivo con diferentes acentos y ruidos de fondo.</p>
+            <button class="btn-study">Escuchar</button>
+        </section>
+
+        <section id="reading">
+            <h3>Reading Comprehension</h3>
+            <p>Análisis de textos rápidos y párrafos técnicos.</p>
+            <button class="btn-study">Leer</button>
+        </section>
+    </div>
+
+    <section id="mocks" class="mock-highlight">
+        <h2>Simulacros (Mock Tests)</h2>
+        <p>Pon a prueba tus conocimientos con exámenes cronometrados de 100 preguntas.</p>
+        <button class="btn-start">EMPEZAR SIMULACRO</button>
+    </section>
+</main>
