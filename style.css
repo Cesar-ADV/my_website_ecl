@@ -25,3 +25,15 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+section {
+    background: white;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #007bff;
+}
