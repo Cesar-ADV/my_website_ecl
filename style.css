@@ -131,3 +131,101 @@ section {
 .btn-start:hover {
     background-color: #d4ac0d; /* Un amarillo un poco más oscuro */
 }
+
+/* --- ESTILOS DE LA VENTANA EMERGENTE (MODAL) --- */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(27, 38, 49, 0.8); /* Fondo azul muy oscuro y transparente */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque moderno */
+}
+
+.modal-content {
+    background-color: #f8f9fa;
+    margin: 5% auto;
+    padding: 40px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 900px;
+    position: relative;
+    animation: slideDown 0.4s ease-out; /* Animación al abrir */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: #1b2631;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    color: #e74c3c;
+}
+
+.modal h2 {
+    color: #1b2631;
+    text-align: center;
+    margin-top: 0;
+}
+
+.modal-subtitle {
+    text-align: center;
+    color: #5dade2;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* --- FICHAS DENTRO DEL MODAL --- */
+.info-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.info-card {
+    background: white;
+    border-left: 5px solid #2980b9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(41, 128, 185, 0.2);
+    border-left: 5px solid #f1c40f; /* Cambia a amarillo al pasar el mouse */
+}
+
+.info-card h4 {
+    color: #154360;
+    margin-top: 0;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.how-we-help {
+    margin-top: 15px;
+    background-color: #eaf2f8; /* Azul muy clarito */
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #1b2631;
+    border: 1px dashed #5dade2;
+}
