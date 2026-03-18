@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECL Grammar - Level 1: Foundations</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- AERO CYBERPUNK SPECIFIC STYLES --- */
+        .cyber-shape-1, .cyber-shape-2 {
+            position: fixed; z-index: -1; filter: blur(60px); opacity: 0.4; animation: float 10s infinite alternate;
+        }
+        .cyber-shape-1 { width: 300px; height: 300px; background: #00FFFF; border-radius: 50%; top: -100px; left: -100px; }
+        .cyber-shape-2 { width: 400px; height: 400px; background: #2980b9; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); bottom: -150px; right: -100px; animation-delay: -5s; }
+        @keyframes float { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(30px) scale(1.1); } }
+
+        /* Main Master Card Container */
+        .master-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 255, 0.3); border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px; padding: 40px; margin-bottom: 40px; color: #e6edf3;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0,255,255,0.05);
+        }
+        
+        .master-header {
+            text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid rgba(0,255,255,0.2);
+        }
+        .master-header h1 {
+            color: #ffffff; text-shadow: 0 0 15px rgba(0, 255, 255, 0.6); margin-bottom: 10px; font-size: 2.5rem;
+        }
+        .master-header p {
+            color: #b0c4de; font-size: 1.1rem; max-width: 800px; margin: 0 auto;
+        }
+
+        /* Activity Blocks */
+        .activity-block {
+            background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(0, 255, 255, 0.1);
+            border-radius: 12px; padding: 30px; margin-bottom: 30px; transition: all 0.5s ease; position: relative;
+        }
+        .activity-block h2 { color: #00FFFF; margin-top: 0; font-size: 1.5rem; display: flex; align-items: center; gap: 10px;}
+
+        /* Locked State */
+        .locked { filter: grayscale(100%) blur(3px); opacity: 0.5; pointer-events: none; }
+        .locked-overlay {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: rgba(13, 17, 23, 0.9); padding: 15px 30px; border-radius: 8px;
+            border: 1px solid #00FFFF; color: #00FFFF; font-weight: bold; text-align: center;
+            box-shadow: 0 0 20px rgba(0,255,255,0.2); z-index: 10; display: none;
+        }
+        .locked .locked-overlay { display: block; }
+
+        /* Inputs & Selects */
+        input[type="text"], select {
+            background: rgba(13, 17, 23, 0.7); border: 1px solid rgba(0, 255, 255, 0.4);
+            color: #00FFFF; padding: 12px; border-radius: 8px; font-family: inherit; font-size: 1rem; width: 100%;
+            outline: none; transition: 0.3s; margin-top: 8px; font-weight: bold;
+        }
+        input[type="text"]:focus, select:focus { border-color: #00FFFF; box-shadow: 0 0 15px rgba(0, 255, 255, 0.4); background: rgba(0,0,0,0.8); }
+
+        /* Radio Options */
+        .radio-group { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+        .radio-label {
+            background: rgba(41, 128, 185, 0.2); border: 1px solid rgba(0, 255, 255, 0.2);
+            padding: 10px 20px; border-radius: 25px; cursor: pointer; transition: all 0.3s; color: #b0c4de;
+        }
+        .radio-label:hover { background: rgba(0, 255, 255, 0.1); color: #fff; }
+        .radio-input:checked + .radio-label {
+            background: rgba(0, 255, 255, 0.8); color: #000; font-weight: bold;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.6); border-color: #00FFFF;
+        }
+        .radio-input { display: none; }
+
+        /* Buttons */
+        .btn-check {
+            background: linear-gradient(to bottom, #00FFFF, #008B8B); color: #000;
+            border: none; padding: 10px 25px; border-radius: 8px; cursor: pointer; font-weight: bold;
+            transition: all 0.3s; box-shadow: 0 4px 10px rgba(0,255,255,0.3); white-space: nowrap;
+        }
+        .btn-check:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,255,255,0.6); }
+        .btn-check:disabled { filter: grayscale(100%); cursor: not-allowed; }
+        
+        .action-bar { display: flex; gap: 15px; margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; flex-wrap: wrap; }
+        
+        /* Feedback */
+        .feedback { margin-top: 10px; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; min-height: 24px;}
+        .correct { color: #00FFFF; text-shadow: 0 0 8px rgba(0,255,255,0.5); }
+        .incorrect { color: #ff3366; text-shadow: 0 0 8px rgba(255,51,102,0.5); }
+        
+        .exercise-item { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px dashed rgba(255,255,255,0.1); }
+        .exercise-item label { font-size: 1.1rem; color: #ffffff; }
+
+        /* Matrix Table */
+        table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 20px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,255,255,0.2); }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        th { background: rgba(0, 255, 255, 0.15); color: #00FFFF; font-weight: bold; text-transform: uppercase; }
+        td { background: rgba(0,0,0,0.3); }
+        tr:last-child td { border-bottom: none; }
+        
+        /* Custom SVG Icons */
+        .icon { width: 20px; height: 20px; flex-shrink: 0; }
+    </style>
+</head>
+<body>
+
+<div class="cyber-shape-1"></div>
+<div class="cyber-shape-2"></div>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="grammar.html">⬅ Navigate to Grid</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <div class="master-card">
+        <div class="master-header">
+            <h1>Negative Sentences and Pronouns factors</h1>
+            <p>Many ECL takers struggle with this basic form, so this section provides intuitive help to master and tackle this. Complete the exercises below sequentially to unlock advanced modules.</p>
+        </div>
+
+        <section class="activity-block" id="block1">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#00FFFF" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                Block 1: Negative Statements
+            </h2>
+            <p style="color:#b0c4de; margin-bottom: 25px;">Type the correct negative sentence. Don't worry about capital letters or final periods. Check your spelling to verify.</p>
+            
+            <div id="b1-container"></div> <div class="action-bar">
+                <button class="btn-study" onclick="resetBlock(1)" style="width: auto; margin:0; background: rgba(255,255,255,0.1); border:1px solid #fff;">Reset Section</button>
+                <button class="btn-check" id="btn-next-2" style="display: none;" onclick="scrollToBlock('block2')">Proceed to Block 2 ➔</button>
+            </div>
+        </section>
+
+        <section class="activity-block locked" id="block2">
+            <div class="locked-overlay">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#00FFFF" stroke-width="2" style="display:block; margin:0 auto 10px; width:30px; height:30px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                COMPLETE PREVIOUS SECTION TO UNLOCK
+            </div>
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#00FFFF" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Block 2: Structural Mechanics
+            </h2>
+            <p style="color:#b0c4de; margin-bottom: 25px;">Select the correct answer to complete the structure. You must score 100% to proceed. Feedback will be provided.</p>
+
+            <div id="b2-container"></div> <div class="action-bar">
+                <button class="btn-check" onclick="checkBlock2()">Verify All Answers</button>
+                <button class="btn-study" onclick="resetBlock(2)" style="width: auto; margin:0; background: rgba(255,255,255,0.1); border:1px solid #fff;">Reset Section</button>
+                <button class="btn-check" id="btn-next-3" style="display: none; background: linear-gradient(to bottom, #f1c40f, #d4ac0d);" onclick="scrollToBlock('block3')">Proceed to Block 3 ➔</button>
+            </div>
+        </section>
+
+        <section class="activity-block locked" id="block3">
+            <div class="locked-overlay">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#00FFFF" stroke-width="2" style="display:block; margin:0 auto 10px; width:30px; height:30px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                COMPLETE PREVIOUS SECTION TO UNLOCK
+            </div>
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#00FFFF" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                Block 3: Pronoun Matrix Verification
+            </h2>
+            <p style="color:#b0c4de;">Complete the pronoun matrix using the dropdown lists.</p>
+
+            <div id="b3-container"></div> <div id="b3-feedback" class="feedback" style="margin-top: 20px; font-size: 1.2rem;"></div>
+
+            <div class="action-bar">
+                <button class="btn-check" onclick="checkBlock3()">Final Matrix Validation</button>
+                <button class="btn-study" onclick="resetBlock(3)" style="width: auto; margin:0; background: rgba(255,255,255,0.1); border:1px solid #fff;">Reset Section</button>
+            </div>
+        </section>
+    </div>
+</main>
+
+<script>
+    /* --- ICONS --- */
+    const iconCheck = `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+    const iconCross = `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+    const iconVoice = `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
+
+    /* --- DATA: BLOCK 1 --- */
+    const b1Data = [
+        { q: "He's recording a tape.", a: ["he isn't recording a tape", "he is not recording a tape"] },
+        { q: "Change your tape!", a: ["don't change your tape", "do not change your tape"] },
+        { q: "I can remember his name.", a: ["i can't remember his name", "i cannot remember his name"] },
+        { q: "They practice in the lab.", a: ["they don't practice in the lab", "they do not practice in the lab"] },
+        { q: "He's going to make a special tape.", a: ["he isn't going to make a special tape", "he is not going to make a special tape"] },
+        { q: "This is an important class.", a: ["this isn't an important class", "this is not an important class"] },
+        { q: "He has a regular class today.", a: ["he doesn't have a regular class today", "he does not have a regular class today"] },
+        { q: "This is an interesting tape.", a: ["this isn't an interesting tape", "this is not an interesting tape"] },
+        { q: "The microphone is on the table.", a: ["the microphone isn't on the table", "the microphone is not on the table"] },
+        { q: "The school uses recorders.", a: ["the school doesn't use recorders", "the school does not use recorders"] },
+        { q: "He goes into the city.", a: ["he doesn't go into the city", "he does not go into the city"] },
+        { q: "Her voice is very high.", a: ["her voice isn't very high", "her voice is not very high"] },
+        { q: "They put the boat into the water.", a: ["they don't put the boat into the water", "they do not put the boat into the water"] },
+        { q: "He's taking a test.", a: ["he isn't taking a test", "he is not taking a test"] }
+    ];
+
+    /* --- DATA: BLOCK 2 (Combined 52 Questions) --- */
+    const b2Data = [
+        { q: "Those are ___", opts: ["car", "door", "pens", "spoon"], ans: "pens", expl: "'Those' is plural, requiring a plural noun." },
+        { q: "These are three ___", opts: ["knife", "cat", "knifes", "knives"], ans: "knives", expl: "The irregular plural of knife is 'knives'." },
+        { q: "___ is a pair of shoes.", opts: ["This", "Them", "Those", "These"], ans: "This", expl: "'A pair' is singular, so it takes 'This'." },
+        { q: "How ___ ties does he have?", opts: ["much", "many", "four", "do"], ans: "many", expl: "'Ties' is countable, so we use 'many'." },
+        { q: "What time is it?", opts: ["It's 5:00.", "Is 5:00.", "It 5:00.", "It are 5:00."], ans: "It's 5:00.", expl: "Time requires the subject 'It' and verb 'is'." },
+        { q: "How are they going?", opts: ["They going by plane.", "They are going by plane.", "They are friends.", "They have two pencils."], ans: "They are going by plane.", expl: "Proper present continuous structure requires 'are going'." },
+        { q: "She ___ brown shoes.", opts: ["has", "have", "his", "is"], ans: "has", expl: "Third person singular takes 'has'." },
+        { q: "How does ___ feel?", opts: ["you", "I", "he", "they"], ans: "he", expl: "'does' is used with third person singular (he/she/it)." },
+        { q: "A pen and a magazine ___ on the table.", opts: ["is", "they is", "they are", "are"], ans: "are", expl: "Compound subjects connected by 'and' take a plural verb." },
+        { q: "___ are we going? We're going by car.", opts: ["Where", "How", "Why", "When"], ans: "How", expl: "Asking about the method of transportation uses 'How'." },
+        { q: "That dog is big. (Alternative form)", opts: ["It is a dog big.", "The dog it is big.", "It is a big dog.", "It a big dog."], ans: "It is a big dog.", expl: "Adjectives come before the noun." },
+        { q: "Choose the correct form.", opts: ["Your name, what is it?", "Is your name?", "What your name?", "What is your name?"], ans: "What is your name?", expl: "Standard interrogative structure." },
+        { q: "Are the shoes on the floor?", opts: ["Yes, it is.", "No, they are.", "No, they aren't.", "Yes, they aren't."], ans: "No, they aren't.", expl: "'Shoes' is plural, requiring 'they aren't'." },
+        { q: "What day is it?", opts: ["It is 6:00.", "It is Thursday.", "The day it is Thursday.", "It is July."], ans: "It is Thursday.", expl: "Days of the week answer 'What day'." },
+        { q: "What ___ you doing?", opts: ["is", "can", "does", "are"], ans: "are", expl: "The pronoun 'you' pairs with 'are' in present continuous." },
+        { q: "Who is that?", opts: ["She is my sister.", "She is going home.", "She is in San Antonio.", "He is sick."], ans: "She is my sister.", expl: "'Who' asks for a person's identity." },
+        { q: "Does he have a new coat?", opts: ["No, he don't.", "Yes, he do.", "Yes, he doesn't.", "Yes, he does."], ans: "Yes, he does.", expl: "Affirmative short answer for 'Does he...' is 'Yes, he does'." },
+        { q: "___ going to class.", opts: ["I am", "I", "I are", "Me"], ans: "I am", expl: "Requires subject and 'be' verb." },
+        { q: "Choose the correct form.", opts: ["I have shoes brown.", "Me have brown shoes.", "I have brown shoes.", "I has brown shoes."], ans: "I have brown shoes.", expl: "Adjectives precede nouns." },
+        { q: "How many hands does he have?", opts: ["He have two hands.", "He has two hand.", "He has two hands.", "He have many two hands."], ans: "He has two hands.", expl: "'He' takes 'has', and 'hands' must be plural." },
+        { q: "He ___ my father.", opts: ["is", "are", "am", "aren't"], ans: "is", expl: "'He' pairs with 'is'." },
+        { q: "What are you doing?", opts: ["I am sick.", "I am eating lunch.", "I am in the barracks.", "I am big."], ans: "I am eating lunch.", expl: "Asks for an action in progress." },
+        { q: "I am looking ___ a picture.", opts: ["to", "in", "on", "at"], ans: "at", expl: "The correct preposition for looking is 'at'." },
+        { q: "___ coat is this?", opts: ["What", "How", "Why", "Whose"], ans: "Whose", expl: "'Whose' indicates possession." },
+        { q: "___ these your books?", opts: ["Isn't", "Aren't", "Doesn't", "Can't"], ans: "Aren't", expl: "'Books' is plural, requiring 'Aren't'." },
+        { q: "She is a teacher. What is ___ job?", opts: ["his", "her", "my", "your"], ans: "her", expl: "Possessive adjective for a female is 'her'." },
+        { q: "He is wearing a ___.", opts: ["pencil", "hat", "shoes", "book"], ans: "hat", expl: "A hat is an item of clothing you can wear." },
+        // General section follows
+        { q: "I can't find ___ dictionary.", opts: ["me", "my"], ans: "my", expl: "Requires a possessive adjective." },
+        { q: "You keep food in ___ refrigerator.", opts: ["your", "yours"], ans: "your", expl: "Requires a possessive adjective before the noun." },
+        { q: "He is putting ___ books on the floor.", opts: ["him", "his"], ans: "his", expl: "Requires a possessive adjective." },
+        { q: "She puts sugar in ___ tea.", opts: ["her", "she"], ans: "her", expl: "Requires a possessive adjective." },
+        { q: "We will finish ___ homework tonight.", opts: ["us", "our"], ans: "our", expl: "Possessive adjective for 'we' is 'our'." },
+        { q: "I am going to buy ___ car.", opts: ["they", "their"], ans: "their", expl: "Possessive adjective for 'they'." },
+        { q: "We like our coffee ___.", opts: ["hot", "ask", "blue"], ans: "hot", expl: "Adjective describing the state of the coffee." },
+        { q: "He ___ coffee for the men.", opts: ["make", "makes"], ans: "makes", expl: "Third person singular present tense." },
+        { q: "He is ___ some questions.", opts: ["ask", "asking"], ans: "asking", expl: "Present continuous requires the -ing form." },
+        { q: "You can buy books in a ___.", opts: ["bookstore", "restaurant"], ans: "bookstore", expl: "Logical vocabulary match." },
+        { q: "You may ___ the test.", opts: ["start", "starting"], ans: "start", expl: "Modals are followed by the base verb." },
+        { q: "There are three ___.", opts: ["bookstore", "bookstores"], ans: "bookstores", expl: "Number 'three' requires a plural noun." },
+        { q: "John is ___ the car.", opts: ["start", "starting"], ans: "starting", expl: "Present continuous requires -ing." },
+        { q: "She is ___ into some dry clothes.", opts: ["change", "changing"], ans: "changing", expl: "Present continuous requires -ing." },
+        { q: "I am recording ___ tapes.", opts: ["any", "some"], ans: "some", expl: "'Some' is used in affirmative statements." },
+        { q: "You can ride with Mark and ___.", opts: ["I", "me"], ans: "me", expl: "Object pronoun follows a preposition (with)." },
+        { q: "She likes her coffee ___.", opts: ["ask", "sweet"], ans: "sweet", expl: "Adjective describing coffee." },
+        { q: "I need a knife to ___ my meat.", opts: ["use", "cut"], ans: "cut", expl: "Logical action with a knife." },
+        { q: "We go to a ___ room for the ECL.", opts: ["special", "only"], ans: "special", expl: "Contextual vocabulary fit." },
+        { q: "He isn't our ___ teacher.", opts: ["regular", "change"], ans: "regular", expl: "Adjective describing the noun." },
+        { q: "___ you change a tape?", opts: ["Who do", "How do"], ans: "How do", expl: "Asking about the process." },
+        { q: "Joe doesn't remember ___ his teacher's name is.", opts: ["what", "how"], ans: "what", expl: "Asking for specific information (a name)." },
+        { q: "Can you change this tape ___ me?", opts: ["into", "for"], ans: "for", expl: "Preposition indicating beneficiary." },
+        { q: "We hear ___ on the tape.", opts: ["voice", "voices"], ans: "voices", expl: "Plural noun works best here contextually without an article." },
+        { q: "He's ___ with the recorder.", opts: ["practice", "practicing"], ans: "practicing", expl: "Present continuous." }
+    ];
+
+    /* --- DATA: BLOCK 3 --- */
+    const b3Data = [
+        { sub: "I", obj: ["me","him","us"], objAns: "me", pos: ["mine","my","ours"], posAns: "mine" },
+        { sub: "He", obj: ["him","her","them"], objAns: "him", pos: ["his","hers","theirs"], posAns: "his" },
+        { sub: "She", obj: ["her","him","me"], objAns: "her", pos: ["hers","ours","yours"], posAns: "hers" },
+        { sub: "We", obj: ["us","them","you"], objAns: "us", pos: ["ours","mine","theirs"], posAns: "ours" },
+        { sub: "You", obj: ["you","me","us"], objAns: "you", pos: ["yours","his","hers"], posAns: "yours" },
+        { sub: "They", obj: ["them","us","him"], objAns: "them", pos: ["theirs","ours","yours"], posAns: "theirs" }
+    ];
+
+    let b1Scores = new Array(b1Data.length).fill(false);
+
+    /* --- RENDER FUNCTIONS --- */
+    window.onload = () => {
+        renderBlock1();
+        renderBlock2();
+        renderBlock3();
+    };
+
+    function renderBlock1() {
+        const container = document.getElementById('b1-container');
+        let html = '';
+        b1Data.forEach((item, index) => {
+            html += `
+            <div class="exercise-item">
+                <label>${index + 1}. ${item.q}</label><br>
+                <div style="display: flex; gap: 10px; align-items: flex-start;">
+                    <div style="flex-grow:1;">
+                        <input type="text" id="b1-q${index}" placeholder="Type negative statement..." onkeydown="if(event.key==='Enter') checkB1(${index})">
+                        <div id="b1-f${index}" class="feedback"></div>
+                    </div>
+                    <button class="btn-check" style="margin-top:8px;" onclick="checkB1(${index})">Check</button>
+                </div>
+            </div>`;
+        });
+        container.innerHTML = html;
+    }
+
+    function renderBlock2() {
+        const container = document.getElementById('b2-container');
+        let html = '';
+        b2Data.forEach((item, index) => {
+            html += `<div class="exercise-item"><label>${index + 1}. ${item.q}</label><br>`;
+            // Alternate between select and radio for variety
+            if (index % 2 === 0) {
+                html += `<select id="b2-q${index}"><option value="">-- Select --</option>`;
+                item.opts.forEach(opt => { html += `<option value="${opt}">${opt}</option>`; });
+                html += `</select>`;
+            } else {
+                html += `<div class="radio-group">`;
+                item.opts.forEach((opt, i) => {
+                    html += `
+                    <input type="radio" name="b2-q${index}" id="b2-q${index}-${i}" value="${opt}" class="radio-input">
+                    <label for="b2-q${index}-${i}" class="radio-label">${opt}</label>`;
+                });
+                html += `</div>`;
+            }
+            html += `<div id="b2-f${index}" class="feedback"></div></div>`;
+        });
+        container.innerHTML = html;
+    }
+
+    function renderBlock3() {
+        const container = document.getElementById('b3-container');
+        let html = `<table><tr><th>SUBJECT</th><th>OBJECT</th><th>POSSESSIVE</th></tr>`;
+        b3Data.forEach((item, index) => {
+            html += `<tr><td><strong>${item.sub}</strong></td><td><select id="b3-obj-${index}"><option value="">--</option>`;
+            item.obj.forEach(opt => html += `<option value="${opt}">${opt}</option>`);
+            html += `</select></td><td><select id="b3-pos-${index}"><option value="">--</option>`;
+            item.pos.forEach(opt => html += `<option value="${opt}">${opt}</option>`);
+            html += `</select></td></tr>`;
+        });
+        html += `</table>`;
+        container.innerHTML = html;
+    }
+
+    /* --- LOGIC: BLOCK 1 --- */
+    function checkB1(index) {
+        let inputEl = document.getElementById(`b1-q${index}`);
+        let feedEl = document.getElementById(`b1-f${index}`);
+        let val = inputEl.value.replace(/[.!?]+$/, '').replace(/\s+/g, ' ').trim().toLowerCase();
+        
+        if (b1Data[index].a.includes(val)) {
+            feedEl.innerHTML = `${iconCheck} Correct! Speak it: <span style="color:#f1c40f; margin-left:5px;">"${inputEl.value}"</span> ${iconVoice}`;
+            feedEl.className = "feedback correct";
+            inputEl.style.borderColor = "#00FFFF";
+            b1Scores[index] = true;
+        } else {
+            feedEl.innerHTML = `${iconCross} Incorrect structure. Keep trying.`;
+            feedEl.className = "feedback incorrect";
+            inputEl.style.borderColor = "#ff3366";
+            b1Scores[index] = false;
+        }
+        checkB1Progress();
+    }
+
+    function checkB1Progress() {
+        if (b1Scores.every(v => v === true)) {
+            document.getElementById("block2").classList.remove("locked");
+            document.getElementById("btn-next-2").style.display = "inline-block";
+        }
+    }
+
+    /* --- LOGIC: BLOCK 2 --- */
+    function checkBlock2() {
+        let allCorrect = true;
+        b2Data.forEach((item, index) => {
+            let val = "";
+            let feedEl = document.getElementById(`b2-f${index}`);
+            if (index % 2 === 0) {
+                val = document.getElementById(`b2-q${index}`).value;
+            } else {
+                val = document.querySelector(`input[name="b2-q${index}"]:checked`)?.value || "";
+            }
+
+            if (val === item.ans) {
+                feedEl.innerHTML = `${iconCheck} ${item.expl}`;
+                feedEl.className = "feedback correct";
+            } else {
+                feedEl.innerHTML = `${iconCross} Review: ${item.expl}`;
+                feedEl.className = "feedback incorrect";
+                allCorrect = false;
+            }
+        });
+
+        if (allCorrect) {
+            document.getElementById("block3").classList.remove("locked");
+            document.getElementById("btn-next-3").style.display = "inline-block";
+        } else {
+            alert("SYSTEM ALERT: Incorrect answers detected. Review the red feedback elements and try again.");
+        }
+    }
+
+    /* --- LOGIC: BLOCK 3 --- */
+    function checkBlock3() {
+        let allCorrect = true;
+        b3Data.forEach((item, index) => {
+            let objVal = document.getElementById(`b3-obj-${index}`).value;
+            let posVal = document.getElementById(`b3-pos-${index}`).value;
+            
+            if(objVal !== item.objAns || posVal !== item.posAns) {
+                allCorrect = false;
+            }
+        });
+
+        let feedEl = document.getElementById('b3-feedback');
+        if (allCorrect) {
+            feedEl.innerHTML = `${iconCheck} CONGRATULATIONS! Matrix successfully verified. Module complete!`;
+            feedEl.className = "feedback correct";
+        } else {
+            feedEl.innerHTML = `${iconCross} Matrix corruption. Check your pronoun alignments.`;
+            feedEl.className = "feedback incorrect";
+        }
+    }
+
+    /* --- HELPERS --- */
+    function resetBlock(blockNum) {
+        if (blockNum === 1) {
+            b1Scores.fill(false);
+            b1Data.forEach((_, i) => {
+                document.getElementById(`b1-q${i}`).value = "";
+                document.getElementById(`b1-q${i}`).style.borderColor = "rgba(0, 255, 255, 0.4)";
+                document.getElementById(`b1-f${i}`).innerHTML = "";
+            });
+            document.getElementById("block2").classList.add("locked");
+            document.getElementById("btn-next-2").style.display = "none";
+        } else if (blockNum === 2) {
+            b2Data.forEach((_, i) => {
+                if (i % 2 === 0) { document.getElementById(`b2-q${i}`).value = ""; } 
+                else { document.querySelectorAll(`input[name="b2-q${i}"]`).forEach(r => r.checked = false); }
+                document.getElementById(`b2-f${i}`).innerHTML = "";
+            });
+            document.getElementById("block3").classList.add("locked");
+            document.getElementById("btn-next-3").style.display = "none";
+        } else if (blockNum === 3) {
+            b3Data.forEach((_, i) => {
+                document.getElementById(`b3-obj-${i}`).value = "";
+                document.getElementById(`b3-pos-${i}`).value = "";
+            });
+            document.getElementById('b3-feedback').innerHTML = "";
+        }
+    }
+
+    function scrollToBlock(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+</script>
+</body>
+</html>

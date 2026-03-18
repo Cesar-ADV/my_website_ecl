@@ -7,15 +7,46 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #f8f9fa;
-    color: #333;
+    background-color: #0d1117; 
+    color: #e6edf3; 
+    /* Opcional: Si tuvieras una imagen de fondo, el cristal se vería aún mejor, 
+       pero con este color sólido oscuro el neon resalta espectacular */
 }
 
+/* --- ESTILOS DEL BANNER --- */
+.banner-container {
+    width: 100%;
+    /* Efecto Aero en el contenedor del banner */
+    background: rgba(27, 38, 49, 0.4); 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.5);
+    box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+    padding: 0 10px; 
+}
+
+.main-banner {
+    width: 95%; 
+    max-width: 1200px; 
+    height: auto; 
+    max-height: 350px; 
+    object-fit: contain; 
+    display: block;
+    margin: 0 auto;
+}
+
+/* --- BARRA DE NAVEGACIÓN (Aero Glass) --- */
 header {
-    background: #1b2631; /* Azul oscuro formal/militar */
+    background: rgba(27, 38, 49, 0.3); /* Cristal muy transparente */
+    backdrop-filter: blur(12px); /* El desenfoque estilo Vista */
+    -webkit-backdrop-filter: blur(12px);
     color: #ffffff;
-    padding: 2rem 1rem;
+    padding: 1rem; 
     text-align: center;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.2); 
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Reflejo de luz en el borde */
 }
 
 nav ul {
@@ -23,38 +54,137 @@ nav ul {
     padding: 0;
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 75px; 
     flex-wrap: wrap;
-    margin-top: 15px;
+    margin: 0; 
 }
 
 nav a {
-    color: #5dade2;
+    color: #ffffff; 
     text-decoration: none;
     font-weight: bold;
-    transition: 0.3s;
+    transition: all 0.4s ease; /* Transición más suave estilo Windows */
+    font-size: 1.1rem; 
+    padding: 5px 15px;
+    border-radius: 5px;
 }
 
 nav a:hover {
-    color: white;
+    color: #00FFFF; 
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.8); 
+    background: rgba(0, 255, 255, 0.1); /* Ligero resplandor detrás del botón */
 }
 
 main {
-    max-width: 1000px;
+    max-width: 1000px; 
     margin: 0 auto;
     padding: 20px;
+    background-color: transparent; 
 }
 
-/* Estilo general para secciones (como "Examination Overview") */
+/* --- ESTILO BASE DE FICHAS AERO GLASS --- */
 section {
-    background: white;
+    /* Gradiente semitransparente para simular el grosor del cristal */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+    backdrop-filter: blur(15px); /* Magia de Windows Vista */
+    -webkit-backdrop-filter: blur(15px);
     padding: 25px;
     margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); /* Sombra de profundidad */
+    /* Bordes: Arriba y a la izquierda simulan la luz pegando en el cristal */
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    color: #e6edf3; /* Texto claro para que se lea en el fondo oscuro */
 }
 
-/* --- DISEÑO DE LAS TARJETAS GRANDES CON ANIMACIÓN --- */
+.level-section {
+    background: transparent; 
+    box-shadow: none;
+    border: none;
+    backdrop-filter: none;
+    padding: 0;
+    margin-bottom: 40px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.section-header h2 {
+    color: #00FFFF; /* Títulos principales en Cian Neón */
+    font-size: 2rem;
+    margin-bottom: 5px;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+.levels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+/* --- FICHAS DE CONTENIDO (MODULE PAGES) AERO CYBERPUNK --- */
+.level-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    color: #e6edf3; 
+}
+
+.level-card:hover {
+    transform: translateY(-10px);
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.02));
+    border: 1px solid #00FFFF; 
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2), inset 0 0 15px rgba(0, 255, 255, 0.1); 
+    animation: neon-pulse 1.5s ease-in-out infinite alternate;
+}
+
+.level-badge {
+    color: white;
+    padding: 8px 15px;
+    font-weight: bold;
+    border-radius: 0 0 12px 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Colores de las insignias con transparencia */
+.beginner .level-badge { background-color: rgba(93, 173, 226, 0.7); }
+.intermediate .level-badge { background-color: rgba(41, 128, 185, 0.7); }
+.advanced .level-badge { background-color: rgba(21, 67, 96, 0.8); }
+
+.level-card h3 {
+    margin-top: 30px;
+    font-size: 1.8rem;
+    color: #ffffff; 
+}
+
+.level-card p {
+    flex-grow: 1; 
+    color: #b0c4de; /* Azul acero muy clarito para lectura cómoda */
+}
+
+/* --- FICHAS DEL HOME AERO CYBERPUNK --- */
 .training-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -63,110 +193,137 @@ section {
 }
 
 .training-grid section {
-    background: white;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     padding: 40px 30px;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.4s ease;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     min-height: 250px;
-    margin-bottom: 0; /* Evita que choque con el margen de la sección general */
+    margin-bottom: 0; 
+    color: #e6edf3; 
 }
 
-/* Animación al pasar el mouse (hover) */
 .training-grid section:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-    border-bottom: 5px solid #2980b9;
+    transform: translateY(-12px) scale(1.02); /* Pequeño zoom 3D */
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.08), rgba(0, 255, 255, 0.01));
+    border: 1px solid #00FFFF;
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2), inset 0 0 15px rgba(0, 255, 255, 0.1);
+    animation: neon-pulse 1.5s ease-in-out infinite alternate;
 }
 
 .training-grid h3 {
     font-size: 1.5rem;
-    color: #1b2631;
+    color: #ffffff; 
     margin-top: 0;
 }
-/* --- FIN DEL DISEÑO DE TARJETAS --- */
+
+.training-grid p {
+    color: #b0c4de;
+}
 
 .mock-highlight {
-    background: linear-gradient(135deg, #154360, #2980b9);
+    background: linear-gradient(135deg, rgba(21, 67, 96, 0.6), rgba(41, 128, 185, 0.4));
+    border: 1px solid #00FFFF; 
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
     color: white;
     text-align: center;
     padding: 40px !important;
 }
 
 .mock-highlight h2 {
-    color: white;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
 }
 
-.btn-study {
-    background-color: #2980b9;
+/* --- BOTONES GLOSSY ESTILO AERO --- */
+.btn-study, .btn-start {
+    /* Efecto pastilla brillante (glossy) */
+    background: linear-gradient(to bottom, rgba(41, 128, 185, 0.8), rgba(21, 67, 96, 0.9));
     color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    border: 1px solid rgba(0, 255, 255, 0.4);
+    border-top: 1px solid rgba(255, 255, 255, 0.4); /* Reflejo superior */
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 4px 6px rgba(0,0,0,0.3);
+    padding: 12px 20px;
+    border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
-    transition: 0.3s; /* Suaviza el cambio de color */
-}
-
-.btn-study:hover {
-    background-color: #1b2631; /* Se pone más oscuro al pasar el mouse */
+    transition: all 0.3s ease;
+    width: 100%; 
+    margin-top: 15px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8); /* Sombra en el texto para legibilidad */
 }
 
 .btn-start {
-    background-color: #f1c40f; /* Amarillo para resaltar el botón principal */
+    background: linear-gradient(to bottom, rgba(241, 196, 15, 0.9), rgba(184, 134, 11, 0.9));
     color: #1b2631;
-    border: none;
-    padding: 15px 40px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: 0.3s;
+    border: 1px solid rgba(255, 215, 0, 0.6);
+    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    text-shadow: none;
+}
+
+.btn-study:hover {
+    background: linear-gradient(to bottom, rgba(0, 255, 255, 0.5), rgba(41, 128, 185, 0.9));
+    border-color: #00FFFF;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
 }
 
 .btn-start:hover {
-    background-color: #d4ac0d; /* Un amarillo un poco más oscuro */
+    background: linear-gradient(to bottom, rgba(255, 255, 0, 0.9), rgba(218, 165, 32, 0.9));
+    box-shadow: 0 0 15px rgba(241, 196, 15, 0.6);
 }
 
-/* --- ESTILOS DE LA VENTANA EMERGENTE (MODAL) --- */
+/* --- ESTILOS DE LA VENTANA EMERGENTE (MODAL AERO) --- */
 .modal {
-    display: none; /* Oculto por defecto */
+    display: none; 
     position: fixed;
     z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(27, 38, 49, 0.8); /* Fondo azul muy oscuro y transparente */
-    backdrop-filter: blur(5px); /* Efecto de desenfoque moderno */
+    background-color: rgba(13, 17, 23, 0.7); 
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .modal-content {
-    background-color: #f8f9fa;
-    margin: 5% auto;
+    background: linear-gradient(135deg, rgba(27, 38, 49, 0.85), rgba(13, 17, 23, 0.95));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e6edf3; 
+    margin: 5vh auto; 
     padding: 40px;
     border-radius: 12px;
     width: 90%;
     max-width: 900px;
     position: relative;
-    animation: slideDown 0.4s ease-out; /* Animación al abrir */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    /* Animación más suave al estilo Windows Vista abriendo una ventana */
+    animation: aero-open 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; 
+    box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+    max-height: 85vh; 
+    overflow-y: auto; 
 }
 
-@keyframes slideDown {
-    from { transform: translateY(-50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+@keyframes aero-open {
+    from { transform: scale(0.95) translateY(-20px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
 }
 
 .close-btn {
     position: absolute;
     top: 15px;
     right: 25px;
-    color: #1b2631;
+    color: #b0c4de;
     font-size: 35px;
     font-weight: bold;
     cursor: pointer;
@@ -174,23 +331,24 @@ section {
 }
 
 .close-btn:hover {
-    color: #e74c3c;
+    color: #00FFFF;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
 }
 
 .modal h2 {
-    color: #1b2631;
+    color: #00FFFF;
     text-align: center;
     margin-top: 0;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
 }
 
 .modal-subtitle {
     text-align: center;
-    color: #5dade2;
+    color: #b0c4de;
     font-weight: bold;
     margin-bottom: 30px;
 }
 
-/* --- FICHAS DENTRO DEL MODAL --- */
 .info-cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -198,34 +356,50 @@ section {
 }
 
 .info-card {
-    background: white;
-    border-left: 5px solid #2980b9;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 3px solid #2980b9;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
 }
 
 .info-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 20px rgba(41, 128, 185, 0.2);
-    border-left: 5px solid #f1c40f; /* Cambia a amarillo al pasar el mouse */
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 255, 255, 0.1);
+    border-left: 3px solid #00FFFF; 
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .info-card h4 {
-    color: #154360;
+    color: #ffffff;
     margin-top: 0;
     font-size: 1.2rem;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 10px;
 }
 
 .how-we-help {
     margin-top: 15px;
-    background-color: #eaf2f8; /* Azul muy clarito */
+    background-color: rgba(41, 128, 185, 0.1); 
     padding: 12px;
     border-radius: 6px;
     font-size: 0.9rem;
-    color: #1b2631;
-    border: 1px dashed #5dade2;
+    color: #b0c4de;
+    border: 1px dashed rgba(0, 255, 255, 0.3);
+}
+
+/* --- ANIMACIONES ADICIONALES --- */
+@keyframes neon-pulse {
+    from {
+        box-shadow: 0 0 5px rgba(0, 255, 255, 0.2), 
+                    0 0 10px rgba(0, 255, 255, 0.1);
+    }
+    to {
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), 
+                    0 0 25px rgba(0, 255, 255, 0.3), 
+                    inset 0 0 10px rgba(0, 255, 255, 0.1);
+    }
 }
